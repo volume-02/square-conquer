@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
-    private int width = 30;
-    private int height = 30;
+    public int width = 30;
+    public int height = 30;
 
-    public GameObject camera;
+    public new GameObject camera;
     public GameObject tilePrefab;
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,7 @@ public class TileManager : MonoBehaviour
         }
 
 
-        camera.transform.position = new Vector3(width / 2, 25, height / 2);
+        camera.transform.position = new Vector3(width / 2, 26.5f, height / 2 - 0.5f);
 
     }
 }

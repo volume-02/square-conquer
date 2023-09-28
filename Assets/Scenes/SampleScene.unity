@@ -412,6 +412,7 @@ MonoBehaviour:
   camera: {fileID: 330585543}
   tilePrefab: {fileID: 4336355759069919189, guid: cd1422ad4993a493786746a3f3142d41,
     type: 3}
+  fillColor: {fileID: 0}
 --- !u!4 &765439247
 Transform:
   m_ObjectHideFlags: 0
@@ -537,7 +538,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b78557bdf609c430cb684fbc857edb9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -10,8 +10,21 @@ public class Player : MonoBehaviour
 
     public float speed = 5;
 
-    private int x = 0;
-    private int z = 0;
+    private int currentX
+    {
+        get
+        {
+            return direction == Vector3.left ? Mathf.CeilToInt(transform.position.x) : Mathf.FloorToInt(transform.position.x);
+        }
+    }
+
+    private int currentZ
+    {
+        get
+        {
+            return direction == Vector3.back ? Mathf.CeilToInt(transform.position.z) : Mathf.FloorToInt(transform.position.z);
+        }
+    }
 
     private void HandleInput()
     {
@@ -49,41 +62,34 @@ public class Player : MonoBehaviour
 
     private void HandleStrictPosition()
     {
-        var changeDirection = false;
-        if (direction == Vector3.forward && transform.position.z > z)
+        tileManager.FillTile(currentX, currentZ);
+        var pos = transform.position;
+
+        if (transform.position.x < 0)
         {
-            z++;
-            changeDirection = true;
+            pos.x = 0;
         }
-        else if (direction == Vector3.back && transform.position.z < z)
+
+        if (transform.position.x > tileManager.width - 1)
         {
-            z--;
-            changeDirection = true;
+            pos.x = tileManager.width - 1;
         }
-        else if (direction == Vector3.left && transform.position.x < x)
+        if (transform.position.z < 0)
         {
-            x--;
-            changeDirection = true;
+            pos.z = 0;
         }
-        else if (direction == Vector3.right && transform.position.x > x)
+        if (transform.position.z > tileManager.height - 1)
         {
-            x++;
-            changeDirection = true;
+            pos.z =  tileManager.height - 1;
         }
-        if (direction == Vector3.zero || changeDirection)
+        transform.position = pos;
+        if (direction.x * (currentX - transform.position.x) < 0.01f && direction.z * (currentZ - transform.position.z) < 0.01f && direction != nextDirection)
         {
-            if (transform.position.z > 0 && nextDirection == Vector3.back ||
-                transform.position.x > 0 && nextDirection == Vector3.left ||
-                transform.position.z < tileManager.height - 1 && nextDirection == Vector3.forward ||
-                transform.position.x < tileManager.width - 1 && nextDirection == Vector3.right)
-            {
-                direction = nextDirection;
-            }
-            else
-            {
-                direction = Vector3.zero;
-            }
+            pos.x = currentX;
+            pos.z = currentZ;
+            direction = nextDirection;
         }
+        transform.position = pos;
     }
     void FixedUpdate()
     {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour
@@ -7,21 +5,14 @@ public class TileManager : MonoBehaviour
     public int width = 30;
     public int height = 30;
 
-    public new GameObject camera;
+    public GameObject camera;
     public GameObject tilePrefab;
     public Material fillColor;
 
     private TileScript[][] tiles;
-    // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void GenerateGrid()
@@ -39,19 +30,16 @@ public class TileManager : MonoBehaviour
                 var isOffset = (x % 2 == 0 && z % 2 != 0) || (x % 2 != 0 && z % 2 == 0);
 
                 var tileScript = spawnedTile.GetComponent<TileScript>();
-
-                tileScript.Init(isOffset);
+                tileScript.isOffset = isOffset;
                 tiles[x][z] = tileScript;
             }
         }
 
-
         camera.transform.position = new Vector3(width / 2, 26.5f, height / 2 - 0.5f);
-
     }
 
-    public void FillTile(int x, int z)
+    public void ChangeTileState(int x, int z, TileState state)
     {
-        tiles[x][z].Fill();
+        tiles[x][z].ChangeState(state);
     }
 }

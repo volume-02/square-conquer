@@ -1,19 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum TileState
+{
+    Regular,
+    Trajectory,
+    Filled
+}
 
 public class TileScript : MonoBehaviour
 {
-    public Material baseColor, secondaryColor, fillColor;
+    private new Renderer renderer;
 
-    public void Init(bool isOffset)
+    public bool isOffset { get; set; }
+    public TileState state { get; set; } = TileState.Regular;
+
+    public Material baseMaterial, secondaryMaterial, trajectoryMaterial, fillMaterial;
+
+    private void Start()
     {
-        var renderer = gameObject.GetComponent<MeshRenderer>();
-        renderer.material = isOffset ? baseColor : secondaryColor;
+        renderer = gameObject.GetComponent<Renderer>();
+        Paint();
     }
-    public void Fill()
+
+    private void Paint()
     {
-        var renderer = gameObject.GetComponent<MeshRenderer>();
-        renderer.material = fillColor;
+        if(renderer == null)
+        {
+            return;
+        }
+        switch (state)
+        {
+            case TileState.Regular:
+                renderer.material = isOffset ? baseMaterial : secondaryMaterial;
+                break;
+            case TileState.Trajectory:
+                renderer.material = trajectoryMaterial;
+                break;
+            case TileState.Filled:
+                renderer.material = fillMaterial;
+                break;
+        }
+    }
+
+    public void ChangeState(TileState newState)
+    {
+        state = newState;
+        Paint();
     }
 }

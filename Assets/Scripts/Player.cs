@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -60,9 +58,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandleMovement()
+    {
+        var posX = currentX;
+        var posZ = currentZ;
+        transform.Translate(direction * Time.deltaTime * speed);
+        var pos = transform.position;
+        if(posX != currentX || posZ != currentZ || direction == Vector3.zero)
+        {
+            pos.x = currentX;
+            pos.z = currentZ;
+            if (direction != nextDirection)
+            {
+                direction = nextDirection;
+            }
+        }
+        transform.position = pos;
+    }
+
     private void HandleStrictPosition()
     {
-        tileManager.FillTile(currentX, currentZ);
+        tileManager.ChangeTileState(currentX, currentZ, TileState.Trajectory);
         var pos = transform.position;
 
         if (transform.position.x < 0)
@@ -83,18 +99,11 @@ public class Player : MonoBehaviour
             pos.z =  tileManager.height - 1;
         }
         transform.position = pos;
-        if (direction.x * (currentX - transform.position.x) < 0.01f && direction.z * (currentZ - transform.position.z) < 0.01f && direction != nextDirection)
-        {
-            pos.x = currentX;
-            pos.z = currentZ;
-            direction = nextDirection;
-        }
-        transform.position = pos;
     }
     void FixedUpdate()
     {
         HandleInput();
-        transform.Translate(direction * Time.deltaTime * speed);
+        HandleMovement();
         HandleStrictPosition();
     }
 }

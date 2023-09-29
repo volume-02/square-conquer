@@ -407,8 +407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31d578bc0274b9ab27aa001fba8291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 30
+  height: 30
   camera: {fileID: 330585543}
   tilePrefab: {fileID: 4336355759069919189, guid: cd1422ad4993a493786746a3f3142d41,
     type: 3}

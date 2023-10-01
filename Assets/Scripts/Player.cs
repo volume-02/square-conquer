@@ -85,22 +85,26 @@ public class Player : MonoBehaviour
         {
             pos.x = 0;
             direction = Vector3.zero;
+            tileManager.FillTiles();
         }
 
         if (transform.position.x > tileManager.width - 1)
         {
             pos.x = tileManager.width - 1;
             direction = Vector3.zero;
+            tileManager.FillTiles();
         }
         if (transform.position.z < 0)
         {
             pos.z = 0;
             direction = Vector3.zero;
+            tileManager.FillTiles();
         }
         if (transform.position.z > tileManager.height - 1)
         {
             pos.z =  tileManager.height - 1;
             direction = Vector3.zero;
+            tileManager.FillTiles();
         }
         transform.position = pos;
     }

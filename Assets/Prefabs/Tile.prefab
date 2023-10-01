@@ -123,3 +123,5 @@ MonoBehaviour:
   secondaryMaterial: {fileID: 2100000, guid: d46632e4ccbbc490185814d32242cd21, type: 2}
   trajectoryMaterial: {fileID: 2100000, guid: b78557bdf609c430cb684fbc857edb9f, type: 2}
   fillMaterial: {fileID: 2100000, guid: 04addc547f0ac6b47b81fbad58bf0917, type: 2}
+  borderMaterial: {fileID: 2100000, guid: aa62dcbdc9b6daf4286c458da11293a7, type: 2}
+  isBorder: 0

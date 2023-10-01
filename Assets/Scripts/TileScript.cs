@@ -16,22 +16,38 @@ public class TileScript : MonoBehaviour
 
     public Material baseMaterial, secondaryMaterial, trajectoryMaterial, fillMaterial;
 
+    public Material borderMaterial;
+
+    public int x { get; set; }
+    public int z { get; set; }
+    public bool isBorder { get; set; }
+    public TileScript prevBorder { get; set; }
+    public TileScript nextBorder { get; set; }
+
+
     private void Start()
     {
         renderer = gameObject.GetComponent<Renderer>();
         Paint();
     }
 
-    private void Paint()
+    public void Paint()
     {
-        if(renderer == null)
+        if (renderer == null)
         {
             return;
         }
         switch (state)
         {
             case TileState.Regular:
-                renderer.material = isOffset ? baseMaterial : secondaryMaterial;
+                if (isBorder)
+                {
+                    renderer.material = borderMaterial;
+                }
+                else
+                {
+                    renderer.material = isOffset ? baseMaterial : secondaryMaterial;
+                }
                 break;
             case TileState.Trajectory:
                 renderer.material = trajectoryMaterial;
@@ -44,7 +60,10 @@ public class TileScript : MonoBehaviour
 
     public void ChangeState(TileState newState)
     {
-        state = newState;
-        Paint();
+        if (state != TileState.Filled)
+        {
+            state = newState;
+            Paint();
+        }
     }
 }

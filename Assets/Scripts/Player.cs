@@ -78,32 +78,36 @@ public class Player : MonoBehaviour
 
     private void HandleStrictPosition()
     {
-        tileManager.ChangeTileState(currentX, currentZ, TileState.Trajectory);
+        tileManager.SetTrajectory(currentX, currentZ, nextDirection);
         var pos = transform.position;
 
-        if (transform.position.x < 0)
+        if (transform.position.x < -0.01)
         {
             pos.x = 0;
             direction = Vector3.zero;
+            nextDirection = Vector3.zero;
             tileManager.FillTiles();
         }
 
-        if (transform.position.x > tileManager.width - 1)
+        if (transform.position.x - tileManager.width + 1 > 0.01)
         {
             pos.x = tileManager.width - 1;
             direction = Vector3.zero;
+            nextDirection = Vector3.zero;
             tileManager.FillTiles();
         }
-        if (transform.position.z < 0)
+        if (transform.position.z < -0.01)
         {
             pos.z = 0;
             direction = Vector3.zero;
+            nextDirection = Vector3.zero;
             tileManager.FillTiles();
         }
-        if (transform.position.z > tileManager.height - 1)
+        if (transform.position.z - tileManager.height + 1 > 0.01)
         {
             pos.z =  tileManager.height - 1;
             direction = Vector3.zero;
+            nextDirection = Vector3.zero;
             tileManager.FillTiles();
         }
         transform.position = pos;

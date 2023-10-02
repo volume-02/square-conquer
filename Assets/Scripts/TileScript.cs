@@ -23,7 +23,8 @@ public class TileScript : MonoBehaviour
     public bool isBorder { get; set; }
     public TileScript prevBorder { get; set; }
     public TileScript nextBorder { get; set; }
-
+    public Vector3 direction { get; set; }
+    public bool isTurn { get; set; }
 
     private void Start()
     {
@@ -65,5 +66,11 @@ public class TileScript : MonoBehaviour
             state = newState;
             Paint();
         }
+    }
+
+    public void SetTrajectory(Vector3 dir)
+    {
+        ChangeState(TileState.Trajectory);
+        direction = dir;
     }
 }

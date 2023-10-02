@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class TileManager : MonoBehaviour
 
     private TileScript startTrajectory;
     private TileScript endTrajectory;
+
+    private List<TileScript> trajectory = new List<TileScript>();
     void Start()
     {
         GenerateGrid();
@@ -147,19 +150,28 @@ public class TileManager : MonoBehaviour
         tiles[x][z].ChangeState(state);
     }
 
-    public void FillTiles()
+    public void SetTrajectory(int x, int z, Vector3 dir, bool prefill = false)
     {
-        for (int x = 0; x < width; x++)
+        if (tiles[x][z].isBorder && !prefill)
         {
-            for (int z = 0; z < height; z++)
+            if (startTrajectory == null)
             {
-                var tileScript = tiles[x][z];
-                if (tileScript.state == TileState.Trajectory)
-                {
-                    ChangeTileState(x, z, TileState.Filled);
-                }
+                startTrajectory = tiles[x][z];
+            }
+            else
+            {
+                endTrajectory = tiles[x][z];
             }
         }
+        if (tiles[x][z].state == TileState.Regular)
+        {
+            trajectory.Add(tiles[x][z]);
+        }
+        tiles[x][z].SetTrajectory(dir);
+    }
+
+    public void FillTiles()
+    {
 
         var directCount = 0;
         var curr = startTrajectory;
@@ -181,7 +193,71 @@ public class TileManager : MonoBehaviour
             }
             curr = curr.prevBorder;
         }
-        Debug.Log($"{directCount} {backCount}");
+
+        if (directCount <= backCount)
+        {
+            curr = endTrajectory;
+            while (curr != startTrajectory && curr != null)
+            {
+                SetTrajectory(curr.x, curr.z, Vector3.right, true);
+                curr = curr.prevBorder;
+            }
+
+        }
+        else
+        {
+            curr = endTrajectory;
+            while (curr != startTrajectory && curr != null)
+            {
+                SetTrajectory(curr.x, curr.z, Vector3.right, true);
+                curr = curr.nextBorder;
+            }
+        }
+
+        Vector3 dir = Vector3.zero;
+        for (int i = 0; i < trajectory.Count; i++)
+        {
+            var cur = trajectory[i];
+            var next = trajectory[(i + 1) % trajectory.Count];
+            var dirrr = new Vector3(next.x, 0, next.z) - new Vector3(cur.x, 0, cur.z);
+            cur.SetTrajectory(dirrr);
+            if (dir != Vector3.zero)
+            {
+                if (dirrr != dir)
+                {
+                    cur.isTurn = true;
+                }
+                else
+                {
+                    cur.isTurn = false;
+                }
+            }
+            dir = dirrr;
+        }
+        for (int z = 0; z < height; z++)
+        {
+            var inBlock = false;
+            for (int x = 0; x < width; x++)
+            {
+                var tileScript = tiles[x][z];
+                if (tileScript.state == TileState.Trajectory)
+                {
+                    ChangeTileState(x, z, TileState.Filled);
+                    if ((tileScript.direction == Vector3.forward || tileScript.direction == Vector3.back) && !tileScript.isTurn)
+                    {
+                        inBlock = !inBlock;
+                    }
+                }
+                if (inBlock)
+                {
+                    ChangeTileState(x, z, TileState.Filled);
+                }
+            }
+        }
+
         RecalculateBorders();
+        trajectory = new List<TileScript>();
+        startTrajectory = null;
+        endTrajectory = null;
     }
 }

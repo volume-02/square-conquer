@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 251811536742220569}
   - component: {fileID: 9189150081707966762}
   - component: {fileID: 5771253089710577739}
-  - component: {fileID: 6702268646342597257}
   - component: {fileID: 654862272361935064}
   m_Layer: 0
   m_Name: Tile
@@ -30,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.94, y: 8.835207, z: -1.56}
-  m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.9, y: 0.1, z: 0.9}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4336355759069919189}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5771253089710577739
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85,28 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6702268646342597257
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4336355759069919189}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &654862272361935064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseMaterial: {fileID: 2100000, guid: 9983fed5bb47948538117dd3c6bd9f0b, type: 2}
   secondaryMaterial: {fileID: 2100000, guid: d46632e4ccbbc490185814d32242cd21, type: 2}
-  trajectoryMaterial: {fileID: 2100000, guid: b78557bdf609c430cb684fbc857edb9f, type: 2}
+  trajectoryMaterial: {fileID: 2100000, guid: c2f739f18181a4654a924c3d6db1fe3d, type: 2}
   fillMaterial: {fileID: 2100000, guid: 04addc547f0ac6b47b81fbad58bf0917, type: 2}
   borderMaterial: {fileID: 2100000, guid: aa62dcbdc9b6daf4286c458da11293a7, type: 2}
-  isBorder: 0

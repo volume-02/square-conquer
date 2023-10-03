@@ -46,7 +46,7 @@ public class TileManager : MonoBehaviour
         }
 
 
-        camera.transform.position = new Vector3(width / 2, 26.5f, height / 2 - 0.5f);
+        //camera.transform.position = new Vector3(width / 2, 26.5f, height / 2 - 0.5f);
     }
 
     private void RecalculateBorders()
